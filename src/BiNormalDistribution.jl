@@ -19,7 +19,7 @@ The probability density function (pdf) is
 ```math
 f(x; λ, μ_1, σ_1, μ_2, σ_2) =
 λ \mathcal{N}(x; μ_1, σ_1)
-+ (1-λ) \\mathcal{N}(x; μ_2, σ_2)
++ (1-λ) \mathcal{N}(x; μ_2, σ_2)
 ```
 where ``\mathcal{N}`` is the pdf of the normal distribution.
 """
