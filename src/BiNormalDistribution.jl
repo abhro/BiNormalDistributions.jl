@@ -47,7 +47,7 @@ function Distributions.quantile(d::BiNormal, q::Real)
     # function to find roots of
     cdf_minus_q = x -> cdf(d, x) -q
     cdf_minus_q_prime = x -> derivative(cdf_minus_q, x)
-    find_zero((cdf_minus_q, cdf_minus_q_prime), mean(d), Roots.Newton())
+    find_zero((cdf_minus_q, cdf_minus_q_prime), mean(d), Newton())
 end
 
 # support is over all the reals
