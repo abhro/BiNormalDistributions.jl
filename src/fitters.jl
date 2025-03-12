@@ -1,4 +1,4 @@
-function loglikelihood(d::BiNormalDistribution, x) # optimizing for params
+function loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     N₁ = Normal(μ₁, σ₁)
     N₂ = Normal(μ₂, σ₂)
@@ -9,8 +9,8 @@ function loglikelihood(d::BiNormalDistribution, x) # optimizing for params
     return logL
 end
 
-function ∇loglikelihood(p, x)
-    λ, μ₁, σ₁, μ₂, σ₂ = p
+function ∇loglikelihood(d::BiNormal, x)
+    λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     N₁ = Normal(μ₁, σ₁)
     N₂ = Normal(μ₂, σ₂)
     ∂λ = 0.0
