@@ -13,15 +13,7 @@ export BiNormal, moments
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
     BiNormal(λ, μ₁, σ₁, μ₂, σ₂)
 
-Linear combination of two Gaussians:
-
-The probability density function (pdf) is
-```math
-f(x; λ, μ_1, σ_1, μ_2, σ_2) =
-λ \mathcal{N}(x; μ_1, σ_1)
-+ (1-λ) \mathcal{N}(x; μ_2, σ_2)
-```
-where ``\mathcal{N}`` is the pdf of the normal distribution.
+Linear combination of two Gaussians.
 """
 struct BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
     λ::W # Should this be constrained to be in [1/2, 1]?
@@ -40,6 +32,17 @@ function Random.rand(rng::AbstractRNG, d::BiNormal)
 end
 #sampler(d::BiNormal) = error()
 
+@doc raw"""
+    pdf(d::BiNormal, x::Real)
+
+The probability density function (pdf) is
+```math
+f(x; λ, μ_1, σ_1, μ_2, σ_2) =
+λ \mathcal{N}(x; μ_1, σ_1)
++ (1-λ) \mathcal{N}(x; μ_2, σ_2)
+```
+where ``\mathcal{N}`` is the pdf of the normal distribution.
+""" Distributions.pdf(d::BiNormal, x::Real)
 Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.λ) * pdf(d.N₂, x))
 Distributions.cdf(d::BiNormal, x::Real)    =     d.λ * cdf(d.N₁, x) + (1 - d.λ) * cdf(d.N₂, x)
 
