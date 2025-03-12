@@ -11,9 +11,9 @@ Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
-Distributions = "0.25.117"
-ForwardDiff = "0.10.38"
+Distributions = "0.25"
+ForwardDiff = "0.10"
 Random = "1"
-Roots = "2.2.6"
+Roots = "2"
 Statistics = "1"
 julia = "1.10"
