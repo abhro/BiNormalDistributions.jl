@@ -92,6 +92,8 @@ Distributions.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
 #cf(d::BiNormal, ::Any) = error()
 
 """
+    moments(x::AbstractVector, n::Integer)
+
 Get the first n-moments of a given dataset. (mean(x^k), k = 1, ..., n)
 """
 function moments(x::AbstractVector, n::Integer)
@@ -116,5 +118,7 @@ function Distributions.median(d::BiNormal)
 
     return fzero(f, mean(d)) # initial guess at mean
 end
+
+include("fitters.jl")
 
 end
