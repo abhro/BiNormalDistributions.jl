@@ -1,4 +1,5 @@
 using KernelDensity: kde
+using Peaks: findmaxima, peakproms
 
 function loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
