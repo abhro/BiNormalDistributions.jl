@@ -6,6 +6,7 @@ import Random: AbstractRNG
 import ForwardDiff: derivative
 using Roots: find_zero, Newton
 using Statistics: mean
+using QuadGK: quadgk
 
 export BiNormal, moments
 
@@ -87,8 +88,28 @@ Distributions.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
 
 #skewness(d::BiNormal) = error()
 #kurtosis(d::BiNormal, ::Bool) = error()
-#entropy(d::BiNormal, ::Real) = error()
-#mgf(d::BiNormal, ::Any) = error()
+"""
+    entropy(d::BiNormal)
+
+Calculate the entropy of a BiNormal distribution `d`, evaluated numerically.
+"""
+function entropy(d::BiNormal)
+    integrand = x -> pdf(d, x) * log(pdf(d, x))
+    integral, residual = quadgk(integrand)
+    @debug("Found entropy with residual", d, residual)
+    return -integral
+end
+
+@doc raw"""
+    mgf(d::BiNormal, t)
+
+Moment generating function of a bi-normal distribution.
+The mathematical definition is:
+```math
+\operatorname{mgf}_d(t) = λ e^{tμ_1 + t^2σ_1^2/2} + (1-λ) e^{tμ_2 + t^2σ_2^2/2}
+```
+"""
+mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
 #cf(d::BiNormal, ::Any) = error()
 
 @doc raw"""
