@@ -103,14 +103,24 @@ end
 @doc raw"""
     mgf(d::BiNormal, t)
 
-Moment generating function of a bi-normal distribution.
+Moment generating function (``M_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-\operatorname{mgf}_d(t) = λ e^{tμ_1 + t^2σ_1^2/2} + (1-λ) e^{tμ_2 + t^2σ_2^2/2}
+M_d(t) = λ e^{tμ_1 + t^2σ_1^2/2} + (1-λ) e^{tμ_2 + t^2σ_2^2/2}
 ```
 """
 mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
-#cf(d::BiNormal, ::Any) = error()
+
+@doc raw"""
+    cf(d::BiNormal, t)
+
+Characteristic function (``φ_d``) of a bi-normal distribution `d`.
+The mathematical definition is:
+```math
+φ_d(t) = λ e^{itμ_1 - t^2σ_1^2/2} + (1-λ) e^{itμ_2 - t^2σ_2^2/2}
+```
+"""
+cf(d::BiNormal, ::Any) = λ*cf(d.N₁, t) + (1-λ)*cf(d.N₂, t)
 
 @doc raw"""
     moments(x::AbstractVector, n::Integer)
