@@ -38,10 +38,10 @@ end
 The probability density function (pdf) is
 ```math
 f(x; λ, μ_1, σ_1, μ_2, σ_2) =
-λ \mathcal{N}(x; μ_1, σ_1)
-+ (1-λ) \mathcal{N}(x; μ_2, σ_2)
+λ N(x; μ_1, σ_1)
++ (1-λ) N(x; μ_2, σ_2)
 ```
-where ``\mathcal{N}`` is the pdf of the normal distribution.
+where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
 Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.λ) * pdf(d.N₂, x))
 Distributions.cdf(d::BiNormal, x::Real)    =     d.λ * cdf(d.N₁, x) + (1 - d.λ) * cdf(d.N₂, x)
@@ -91,10 +91,10 @@ Distributions.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
 #mgf(d::BiNormal, ::Any) = error()
 #cf(d::BiNormal, ::Any) = error()
 
-"""
+@doc raw"""
     moments(x::AbstractVector, n::Integer)
 
-Get the first n-moments of a given dataset. (mean(x^k), k = 1, ..., n)
+Get the first n-moments of a given dataset. (``⟨ x^k ⟩``, ``k = 1, \dots, n``)
 """
 function moments(x::AbstractVector, n::Integer)
     m = zeros(eltype(x), n)
@@ -110,11 +110,20 @@ function Base.show(io::IO, d::BiNormal)
     print(io, "(λ=", λ, ", μ₁=", μ₁, ", σ₁=", σ₁, ", μ₂=", μ₂, ", σ₂=", σ₂, ")")
 end
 
+"""
+    median(d::BiNormal)
+
+Find the median of a BiNormal distribution `d`. Note that this doesn't have an
+analytical solution, so a root-finding algorithm from Roots.jl is employed.
+"""
 function Distributions.median(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
 
     # function which is zero for x = median
     f = x -> λ * erf((x - μ₁)/σ₁) + (1 - λ) * erf((x - μ₂)/σ₂)
+
+    # XXX bracket the search between
+    # `extrema([μ₁ + 2σ₁, μ₁ - 2σ₁, μ₂ + 2σ₂, μ₂ - 2σ₂])`?
 
     return fzero(f, mean(d)) # initial guess at mean
 end

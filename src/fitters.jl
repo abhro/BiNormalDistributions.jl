@@ -1,6 +1,9 @@
 using KernelDensity: kde
 using Peaks: findmaxima, peakproms
 
+"""
+Get the total log-likelihood of a BiNormal distribution `d` producing samples `x`.
+"""
 function loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     N₁ = Normal(μ₁, σ₁)
@@ -12,6 +15,12 @@ function loglikelihood(d::BiNormal, x) # optimizing for params
     return logL
 end
 
+"""
+    ∇loglikelihood(d::BiNormal, x)
+
+Gradient of the [`loglikelihood`](@ref) function with respect to
+the parameters of `d`.
+"""
 function ∇loglikelihood(d::BiNormal, x)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     N₁ = Normal(μ₁, σ₁)
@@ -41,11 +50,23 @@ function ∇loglikelihood(d::BiNormal, x)
     return [∂λ, ∂μ₁, ∂σ₁, ∂μ₂, ∂σ₂]
 end
 
+"""
+Find the most prominent occurences in a data series.
+Calculated by making a kernel density estimate and then finding the peaks of the
+KDE when treated as a signal.
+
+Returns the interpolated KDE and the maxima of the KDE.
+
+See also: [`maxes`](@ref).
+"""
 function histmaxes(x, n = nothing)
     interped = kde(x, npoints = length(x))
     return (interped, maxes(interped.density, n))
 end
 
+"""
+Find the `n` most prominent maxima of a signal/curve `x`.
+"""
 function maxes(x, n = nothing)
     peaks = findmaxima(x) |> peakproms
     fields = [:indices, :heights, :proms]
