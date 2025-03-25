@@ -23,6 +23,11 @@ struct BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
 end
 BiNormal(λ, μ₁, σ₁, μ₂, σ₂) = BiNormal(λ, Normal(μ₁, σ₁), Normal(μ₂, σ₂))
 
+"""
+    params(d::BiNormal)
+
+Return the parameters of a `BiNormal` distribution: ``(λ, μ_1, σ_1, μ_2, σ_2)``.
+"""
 Distributions.params(d::BiNormal) = (d.λ, params(d.N₁)..., params(d.N₂)...)
 Base.eltype(::Type{BiNormal{T}}) where {T} = T
 
@@ -45,8 +50,24 @@ f(x; λ, μ_1, σ_1, μ_2, σ_2) =
 where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
 Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.λ) * pdf(d.N₂, x))
-Distributions.cdf(d::BiNormal, x::Real)    =     d.λ * cdf(d.N₁, x) + (1 - d.λ) * cdf(d.N₂, x)
+@doc raw"""
+    cdf(d::BiNormal, x::Real)
 
+The cumulative density function (cdf) is
+```math
+F(x; λ, μ_1, σ_1, μ_2, σ_2) =
+λ F_N(x; μ_1, σ_1)
++ (1-λ) F_N(x; μ_2, σ_2)
+```
+where ``F_N`` is the cdf of the normal distribution.
+"""
+Distributions.cdf(d::BiNormal, x::Real) = d.λ * cdf(d.N₁, x) + (1 - d.λ) * cdf(d.N₂, x)
+
+"""
+    quantile(d::BiNormal, q::Real)
+
+Use Newton's method to find the quantile for `BiNormal` distribution `d`.
+"""
 function Distributions.quantile(d::BiNormal, q::Real)
     # function to find roots of
     cdf_minus_q = x -> cdf(d, x) -q
@@ -158,7 +179,7 @@ function Distributions.median(d::BiNormal)
     # XXX bracket the search between
     # `extrema([μ₁ + 2σ₁, μ₁ - 2σ₁, μ₂ + 2σ₂, μ₂ - 2σ₂])`?
 
-    return fzero(f, mean(d)) # initial guess at mean
+    return find_zero(f, mean(d)) # initial guess at mean
 end
 
 include("fitters.jl")
