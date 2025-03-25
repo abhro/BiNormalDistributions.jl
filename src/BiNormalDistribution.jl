@@ -106,7 +106,8 @@ end
 Moment generating function (``M_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-M_d(t) = λ e^{tμ_1 + t^2σ_1^2/2} + (1-λ) e^{tμ_2 + t^2σ_2^2/2}
+M_d(t) = λ \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2/2\right)
+       + (1-λ) \exp\left(t μ_2 + \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
 mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
@@ -117,7 +118,8 @@ mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
 Characteristic function (``φ_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-φ_d(t) = λ e^{itμ_1 - t^2σ_1^2/2} + (1-λ) e^{itμ_2 - t^2σ_2^2/2}
+φ_d(t) = λ \exp\left(itμ_1 - \tfrac{1}{2} t^2 σ_1^2\right)
+       + (1-λ) \exp\left(itμ_2 - \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
 cf(d::BiNormal, ::Any) = λ*cf(d.N₁, t) + (1-λ)*cf(d.N₂, t)
@@ -125,7 +127,7 @@ cf(d::BiNormal, ::Any) = λ*cf(d.N₁, t) + (1-λ)*cf(d.N₂, t)
 @doc raw"""
     moments(x::AbstractVector, n::Integer)
 
-Get the first n-moments of a given dataset. (``⟨ x^k ⟩``, ``k = 1, \dots, n``)
+Get the first `n`-moments of a given dataset. (``⟨ x^k ⟩``, ``k = 1, \dots, n``)
 """
 function moments(x::AbstractVector, n::Integer)
     m = zeros(eltype(x), n)
