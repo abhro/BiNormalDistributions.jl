@@ -127,7 +127,7 @@ end
 Moment generating function (``M_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-M_d(t) = λ \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2/2\right)
+M_d(t) = λ \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2\right)
        + (1-λ) \exp\left(t μ_2 + \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
