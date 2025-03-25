@@ -12,7 +12,7 @@ export BiNormal, moments
 
 @doc raw"""
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
-    BiNormal(λ, μ₁, σ₁, μ₂, σ₂)
+    BiNormal(λ::W, μ₁::T, σ₁::T, μ₂::T, σ₂::T)
 
 Linear combination of two Gaussians.
 """
