@@ -107,7 +107,26 @@ Distributions.mode(d::BiNormal) = d.N₁.μ
 
 Distributions.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
 
-#skewness(d::BiNormal) = error()
+@doc raw"""
+    skewness(d::BiNormal)
+
+Mathematical definition:
+```math
+γ = \frac{λ μ_1 (μ_1^2 + σ_1^2) + (1 - λ) μ_2 (μ_2^2 + σ_2^2) - μ (3 σ^2 + μ^2)}{σ^3}
+```
+where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
+``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
+"""
+function skewness(d::BiNormal)
+    λ, μ₁, σ₁, μ₂, σ₂ = params(d)
+    μ = mean(d)
+    σ² = var(d)
+
+    γ = (λ*μ₁*(μ₁^2+σ₁^2) + (1-λ)*μ₂*(μ₂^2+σ₂^2) - μ*(3σ²+μ^2)) / (σ²^(2//3))
+
+    return γ
+end
+
 #kurtosis(d::BiNormal, ::Bool) = error()
 """
     entropy(d::BiNormal)
