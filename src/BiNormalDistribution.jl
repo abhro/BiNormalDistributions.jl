@@ -50,6 +50,7 @@ f(x; λ, μ_1, σ_1, μ_2, σ_2) =
 where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
 Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.λ) * pdf(d.N₂, x))
+
 @doc raw"""
     cdf(d::BiNormal, x::Real)
 
@@ -166,7 +167,7 @@ Calculate the entropy of a BiNormal distribution `d`, evaluated numerically.
 """
 function entropy(d::BiNormal)
     integrand = x -> pdf(d, x) * log(pdf(d, x))
-    integral, residual = quadgk(integrand)
+    integral, residual = quadgk(integrand, -Inf, Inf)
     @debug("Found entropy with residual", d, residual)
     return -integral
 end
