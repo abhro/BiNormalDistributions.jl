@@ -43,9 +43,7 @@ end
 
 The probability density function (pdf) is
 ```math
-f(x; λ, μ_1, σ_1, μ_2, σ_2) =
-λ N(x; μ_1, σ_1)
-+ (1-λ) N(x; μ_2, σ_2)
+f(x; λ, μ_1, σ_1, μ_2, σ_2) = λ N(x; μ_1, σ_1) + (1-λ) N(x; μ_2, σ_2)
 ```
 where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
@@ -56,9 +54,7 @@ Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.
 
 The cumulative density function (cdf) is
 ```math
-F(x; λ, μ_1, σ_1, μ_2, σ_2) =
-λ F_N(x; μ_1, σ_1)
-+ (1-λ) F_N(x; μ_2, σ_2)
+F(x; λ, μ_1, σ_1, μ_2, σ_2) = λ F_N(x; μ_1, σ_1) + (1-λ) F_N(x; μ_2, σ_2)
 ```
 where ``F_N`` is the cdf of the normal distribution.
 """
@@ -134,8 +130,8 @@ end
 Mathematical definition:
 ```math
 \frac{
-         λ  (μ_1^4 + 3 μ_1^4 + 6 μ_1^2 σ_1^2)
-    + (1-λ) (μ_2^4 + 3 μ_2^4 + 6 μ_2^2 σ_2^2)
+         λ  (μ_1^4 + 3 σ_1^4 + 6 μ_1^2 σ_1^2)
+    + (1-λ) (μ_2^4 + 3 σ_2^4 + 6 μ_2^2 σ_2^2)
     + 3 μ^2 (μ^2 + 2 σ^2)
     - 4 μ [λ μ_1 (μ_1^2 + 3 σ_1^2) + (1-λ) μ_2 (μ_2^2 + 3 σ_2^2)]
 }{
@@ -151,8 +147,8 @@ function kurtosis(d::BiNormal)
     σ² = var(d)
 
     numerator = (
-             λ *(μ₁^4 + 3*μ₁^4 + 6*μ₁^2*σ₁^2)
-        + (1-λ)*(μ₂^4 + 3*μ₂^4 + 6*μ₂^2*σ₂^2)
+             λ *(μ₁^4 + 3*σ₁^4 + 6*μ₁^2*σ₁^2)
+        + (1-λ)*(μ₂^4 + 3*σ₂^4 + 6*μ₂^2*σ₂^2)
         + 3*μ^2*(μ^2 + 2σ²)
         - 4*μ*(λ*μ₁*(μ₁^2 + 3σ₁^2) + (1-λ)*μ₂*(μ₂^2 + 3σ₂^2))
    )
