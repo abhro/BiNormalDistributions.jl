@@ -127,7 +127,38 @@ function skewness(d::BiNormal)
     return γ
 end
 
-#kurtosis(d::BiNormal, ::Bool) = error()
+@doc raw"""
+    kurtosis(d::BiNormal)
+
+Mathematical definition:
+```math
+\frac{
+         λ  (μ_1^4 + 3 μ_1^4 + 6 μ_1^2 σ_1^2)
+    + (1-λ) (μ_2^4 + 3 μ_2^4 + 6 μ_2^2 σ_2^2)
+    + 3 μ^2 (μ^2 + 2 σ^2)
+    - 4 μ [λ μ_1 (μ_1^2 + 3 σ_1^2) + (1-λ) μ_2 (μ_2^2 + 3 σ_2^2)]
+}{
+    σ^4
+}
+```
+where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
+``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
+"""
+function kurtosis(d::BiNormal)
+    λ, μ₁, σ₁, μ₂, σ₂ = params(d)
+    μ = mean(d)
+    σ² = var(d)
+
+    numerator = (
+             λ *(μ₁^4 + 3*μ₁^4 + 6*μ₁^2*σ₁^2)
+        + (1-λ)*(μ₂^4 + 3*μ₂^4 + 6*μ₂^2*σ₂^2)
+        + 3*μ^2*(μ^2 + 2σ²)
+        - 4*μ*(λ*μ₁*(μ₁^2 + 3σ₁^2) + (1-λ)*μ₂*(μ₂^2 + 3σ₂^2))
+   )
+
+    return numerator / σ²^2
+end
+
 """
     entropy(d::BiNormal)
 
