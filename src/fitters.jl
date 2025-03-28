@@ -50,7 +50,7 @@ function ∇loglikelihood(d::BiNormal, x)
 end
 
 """
-    histmaxes(x, n = nothing)
+    kdemaxes(x, n = nothing)
 
 Find the most prominent occurences in a data series.
 Calculated by making a kernel density estimate and then finding the peaks of the
@@ -60,7 +60,7 @@ Returns the interpolated KDE and the maxima of the KDE.
 
 See also: [`maxes`](@ref).
 """
-function histmaxes(x, n = nothing)
+function kdemaxes(x, n = nothing)
     interped = kde(x, npoints = length(x))
     return (interped, maxes(interped.density, n))
 end
