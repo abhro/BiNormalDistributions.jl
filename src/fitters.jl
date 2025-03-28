@@ -8,12 +8,9 @@ Get the total log-likelihood of a BiNormal distribution `d` producing samples `x
 """
 function loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
-    #N₁ = Normal(μ₁, σ₁)
-    #N₂ = Normal(μ₂, σ₂)
     logL = 0.0
     for xᵢ in x
         logL += logpdf(d, xᵢ)
-        #logL += log(λ * pdf(N₁, xᵢ) + (1 - λ) * pdf(N₂, xᵢ))
     end
     return logL
 end
@@ -26,16 +23,15 @@ the parameters of `d`.
 """
 function ∇loglikelihood(d::BiNormal, x)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
-    N₁ = Normal(μ₁, σ₁)
-    N₂ = Normal(μ₂, σ₂)
     ∂λ = 0.0
     ∂μ₁ = 0.0
     ∂σ₁ = 0.0
     ∂μ₂ = 0.0
     ∂σ₂ = 0.0
     for xᵢ in x
-        pdf₁ = pdf(N₁, xᵢ)
-        pdf₂ = pdf(N₂, xᵢ)
+        pdf₁, pdf₂ = componentpdfs(d, xᵢ)
+        pdf₁ /= λ
+        pdf₂ /= 1-λ
         denom = λ * pdf₁ + (1 - λ) * pdf₂
 
         ∂λ += (pdf₁ - pdf₂) / denom
