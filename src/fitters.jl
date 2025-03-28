@@ -8,11 +8,12 @@ Get the total log-likelihood of a BiNormal distribution `d` producing samples `x
 """
 function loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
-    N₁ = Normal(μ₁, σ₁)
-    N₂ = Normal(μ₂, σ₂)
+    #N₁ = Normal(μ₁, σ₁)
+    #N₂ = Normal(μ₂, σ₂)
     logL = 0.0
     for xᵢ in x
-        logL += log(λ * pdf(N₁, xᵢ) + (1 - λ) * pdf(N₂, xᵢ))
+        logL += logpdf(d, xᵢ)
+        #logL += log(λ * pdf(N₁, xᵢ) + (1 - λ) * pdf(N₂, xᵢ))
     end
     return logL
 end
