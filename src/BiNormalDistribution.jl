@@ -36,7 +36,24 @@ function Random.rand(rng::AbstractRNG, d::BiNormal)
     x₂ = Random.rand(rng, d.N₂)
     return d.λ * x₁ + (1 - d.λ) * x₂
 end
-#sampler(d::BiNormal) = error()
+
+"""
+    componentpdfs(d::BiNormal, x::Real)
+
+Return the (weighted) component pdfs of the BiNormal distribution, that is,
+``λ N(x; μ_1, σ_1)`` and ``(1-λ) N(x; μ_2, σ_2)``,
+where ``N`` is the pdf of the normal distribution.
+"""
+componentpdfs(d::BiNormal, x::Real) = (d.λ * pdf(d.N₁, x), (1 - d.λ) * pdf(d.N₂, x))
+
+"""
+    componentcdfs(d::BiNormal, x::Real)
+
+Return the (weighted) component pdfs of the BiNormal distribution, that is,
+``λ F_N(x; μ_1, σ_1)`` and ``(1-λ) F_N(x; μ_2, σ_2)``,
+where ``F_N`` is the cdf of the normal distribution.
+"""
+componentcdfs(d::BiNormal, x::Real) = (d.λ * cdf(d.N₁, x), (1 - d.λ) * cdf(d.N₂, x))
 
 @doc raw"""
     pdf(d::BiNormal, x::Real)
@@ -47,7 +64,7 @@ f(x; λ, μ_1, σ_1, μ_2, σ_2) = λ N(x; μ_1, σ_1) + (1-λ) N(x; μ_2, σ_2)
 ```
 where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
-Distributions.logpdf(d::BiNormal, x::Real) = log(d.λ * pdf(d.N₁, x) + (1 - d.λ) * pdf(d.N₂, x))
+Distributions.logpdf(d::BiNormal, x::Real) = log(sum(componentpdfs(d, x)))
 
 @doc raw"""
     cdf(d::BiNormal, x::Real)
@@ -58,7 +75,7 @@ F(x; λ, μ_1, σ_1, μ_2, σ_2) = λ F_N(x; μ_1, σ_1) + (1-λ) F_N(x; μ_2, �
 ```
 where ``F_N`` is the cdf of the normal distribution.
 """
-Distributions.cdf(d::BiNormal, x::Real) = d.λ * cdf(d.N₁, x) + (1 - d.λ) * cdf(d.N₂, x)
+Distributions.cdf(d::BiNormal, x::Real) = sum(componentcdfs(d, x))
 
 """
     quantile(d::BiNormal, q::Real)
