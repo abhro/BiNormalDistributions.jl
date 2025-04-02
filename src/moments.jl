@@ -18,7 +18,7 @@ Get the first `n` central moments of a given dataset. (``⟨ (x-μ)^k ⟩``, ``k
 function centralmoments(x::AbstractVector, n::Integer)
     m = zeros(eltype(x), n)
     μ = mean(x)
-    m[begin] = μ
+    # the first central moment is 0, don't bother computing
     for k in eachindex(m)[begin+1:end]
         m[k] = mean(xᵢ -> (xᵢ-μ)^k, x)
     end
