@@ -5,10 +5,12 @@ import Random
 import Random: AbstractRNG
 import ForwardDiff: derivative
 using Roots: find_zero, Newton
-using Statistics: mean
+using Statistics
+using StatsAPI
+using StatsBase
 using QuadGK: quadgk
 
-export BiNormal, moments, centralmoments
+export BiNormal
 
 @doc raw"""
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
@@ -46,7 +48,7 @@ BiNormal(λ, μ₁, σ₁, μ₂, σ₂) = BiNormal(λ, Normal(μ₁, σ₁), No
 
 Return the parameters of a `BiNormal` distribution: ``(λ, μ_1, σ_1, μ_2, σ_2)``.
 """
-Distributions.params(d::BiNormal) = (d.λ, params(d.N₁)..., params(d.N₂)...)
+StatsAPI.params(d::BiNormal) = (d.λ, params(d.N₁)..., params(d.N₂)...)
 Base.eltype(::Type{BiNormal{T}}) where {T} = T
 
 function Random.rand(rng::AbstractRNG, d::BiNormal)
@@ -100,7 +102,7 @@ Distributions.cdf(d::BiNormal, x::Real) = sum(componentcdfs(d, x))
 
 Use Newton's method to find the quantile for `BiNormal` distribution `d`.
 """
-function Distributions.quantile(d::BiNormal, q::Real)
+function Statistics.quantile(d::BiNormal, q::Real)
     # function to find roots of
     cdf_minus_q = x -> cdf(d, x) -q
     cdf_minus_q_prime = x -> derivative(cdf_minus_q, x)
@@ -117,7 +119,7 @@ Distributions.insupport(d::BiNormal, x::Real) = true
 
 Mean of the bi-normal distribution is ``μ = λ μ_1 + (1 - λ) μ_2``
 """
-Distributions.mean(d::BiNormal) = d.λ * mean(d.N₁) + (1 - d.λ) * mean(d.N₂)
+Statistics.mean(d::BiNormal) = d.λ * mean(d.N₁) + (1 - d.λ) * mean(d.N₂)
 
 @doc raw"""
     var(d::BiNormal)
@@ -130,7 +132,7 @@ Variance of the bi-normal distribution is
 \end{align*}
 ```
 """
-function Distributions.var(d::BiNormal)
+function Statistics.var(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     return λ * σ₁^2 + (1 - λ) * σ₂^2 + λ * (1 - λ) * (μ₁ - μ₂)^2
 end
@@ -196,7 +198,7 @@ end
 
 Calculate the entropy of a BiNormal distribution `d`, evaluated numerically.
 """
-function Distributions.entropy(d::BiNormal)
+function StatsBase.entropy(d::BiNormal)
     integrand = x -> pdf(d, x) * log(pdf(d, x))
     integral, residual = quadgk(integrand, -Inf, Inf)
     @debug("Found entropy with residual", d, residual)
@@ -239,7 +241,7 @@ end
 Find the median of a BiNormal distribution `d`. Note that this doesn't have an
 analytical solution, so a root-finding algorithm from Roots.jl is employed.
 """
-function Distributions.median(d::BiNormal)
+function Statistics.median(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
 
     # function which is zero for x = median

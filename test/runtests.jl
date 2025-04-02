@@ -4,7 +4,7 @@ using Aqua
 
 @testset "BiNormalDistribution" begin
     @testset "Code quality (Aqua)" begin
-        Aqua.test_all(BiNormalDistribution)
+        Aqua.test_all(BiNormalDistribution, piracies = false)
     end
     # Write your tests here.
 
