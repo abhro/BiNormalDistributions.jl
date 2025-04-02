@@ -131,7 +131,7 @@ Mathematical definition:
 where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
 ``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
 """
-function skewness(d::BiNormal)
+function Distributions.skewness(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     μ = mean(d)
     σ² = var(d)
@@ -158,7 +158,7 @@ Mathematical definition:
 where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
 ``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
 """
-function kurtosis(d::BiNormal)
+function Distributions.kurtosis(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     μ = mean(d)
     σ² = var(d)
@@ -178,7 +178,7 @@ end
 
 Calculate the entropy of a BiNormal distribution `d`, evaluated numerically.
 """
-function entropy(d::BiNormal)
+function Distributions.entropy(d::BiNormal)
     integrand = x -> pdf(d, x) * log(pdf(d, x))
     integral, residual = quadgk(integrand, -Inf, Inf)
     @debug("Found entropy with residual", d, residual)
@@ -195,7 +195,7 @@ M_d(t) = λ \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2\right)
        + (1-λ) \exp\left(t μ_2 + \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
-mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
+Distributions.mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
 
 @doc raw"""
     cf(d::BiNormal, t)
@@ -207,7 +207,7 @@ The mathematical definition is:
        + (1-λ) \exp\left(itμ_2 - \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
-cf(d::BiNormal, ::Any) = λ*cf(d.N₁, t) + (1-λ)*cf(d.N₂, t)
+Distributions.cf(d::BiNormal, ::Any) = λ*cf(d.N₁, t) + (1-λ)*cf(d.N₂, t)
 
 @doc raw"""
     moments(x::AbstractVector, n::Integer)
