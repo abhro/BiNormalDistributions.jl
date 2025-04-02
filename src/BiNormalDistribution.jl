@@ -17,7 +17,8 @@ export BiNormal, moments, centralmoments
 Linear combination of two Gaussians.
 
 The distribution is defined by five parameters:
-- `λ`: weight of the first normal distribution N₁. Since the N₁ is presumed to have more influence, `λ` must be within 1/2 and 1.
+- `λ`: weight of the first normal distribution N₁. Since the N₁ is presumed to have
+  more influence, `λ` must be within 1/2 and 1.
 - `μ₁`: mean of the first normal distribution N₁.
 - `σ₁`: variance of the first normal distribution N₁.
 - `μ₂`: mean of the second normal distribution N₂.
