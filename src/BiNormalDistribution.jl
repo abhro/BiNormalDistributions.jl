@@ -8,7 +8,7 @@ using Roots: find_zero, Newton
 using Statistics: mean
 using QuadGK: quadgk
 
-export BiNormal, moments
+export BiNormal, moments, centralmoments
 
 @doc raw"""
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
