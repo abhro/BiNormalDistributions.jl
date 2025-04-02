@@ -221,6 +221,20 @@ function moments(x::AbstractVector, n::Integer)
     end
     return m
 end
+@doc raw"""
+    centralmoments(x::AbstractVector, n::Integer)
+
+Get the first `n` central moments of a given dataset. (``⟨ (x-μ)^k ⟩``, ``k = 1, \dots, n``)
+"""
+function centralmoments(x::AbstractVector, n::Integer)
+    m = zeros(eltype(x), n)
+    μ = mean(x)
+    m[begin] = μ
+    for k in eachindex(m)[begin+1:end]
+        m[k] = mean(xᵢ -> (xᵢ-μ)^k, x)
+    end
+    return m
+end
 
 function Base.show(io::IO, d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
