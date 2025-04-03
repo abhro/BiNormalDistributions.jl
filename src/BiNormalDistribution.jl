@@ -10,7 +10,7 @@ using StatsAPI
 using StatsBase
 using QuadGK: quadgk
 
-export BiNormal
+export BiNormal, componentpdfs, componentcdfs
 
 @doc raw"""
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
