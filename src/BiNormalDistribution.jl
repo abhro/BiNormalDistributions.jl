@@ -75,7 +75,7 @@ where ``F_N`` is the cdf of the normal distribution.
 """
 componentcdfs(d::BiNormal, x::Real) = (d.λ * cdf(d.N₁, x), (1 - d.λ) * cdf(d.N₂, x))
 
-@doc raw"""
+"""
     pdf(d::BiNormal, x::Real)
 
 The probability density function (pdf) is
@@ -86,7 +86,7 @@ where ``N`` is the pdf of the normal distribution.
 """ Distributions.pdf(d::BiNormal, x::Real)
 Distributions.logpdf(d::BiNormal, x::Real) = log(sum(componentpdfs(d, x)))
 
-@doc raw"""
+"""
     cdf(d::BiNormal, x::Real)
 
 The cumulative density function (cdf) is
@@ -137,9 +137,8 @@ function Statistics.var(d::BiNormal)
     return λ * σ₁^2 + (1 - λ) * σ₂^2 + λ * (1 - λ) * (μ₁ - μ₂)^2
 end
 
-Distributions.mode(d::BiNormal) = d.N₁.μ
-
-Distributions.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
+StatsBase.mode(d::BiNormal) = d.N₁.μ
+StatsBase.modes(d::BiNormal) = [d.N₁.μ, d.N₂.μ]
 
 @doc raw"""
     skewness(d::BiNormal)
