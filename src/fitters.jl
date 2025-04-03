@@ -1,3 +1,4 @@
+using StatsAPI
 using KernelDensity: kde
 using Peaks: findmaxima, peakproms
 
@@ -6,7 +7,7 @@ using Peaks: findmaxima, peakproms
 
 Get the total log-likelihood of a BiNormal distribution `d` producing samples `x`.
 """
-function loglikelihood(d::BiNormal, x) # optimizing for params
+function StatsAPI.loglikelihood(d::BiNormal, x) # optimizing for params
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     logL = 0.0
     for xᵢ in x

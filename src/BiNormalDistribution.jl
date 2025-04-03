@@ -30,9 +30,9 @@ Domain transformation:
 
 If the weight (`λ`) is available as a real number instead, the following domain transformation can be used:
 ```math
-β = \ln \frac{2λ-1}{2-2λ},
+β = \ln \frac{2λ - 1}{2 - 2λ},
 \quad
-λ = \frac{2+e^{-β}}{2+2e^{-β}}
+λ = \frac{2 + e^{-β}}{2 + 2e^{-β}}
 ```
 Here, ``λ ∈ [1/2, 1]`` and ``β ∈ ℝ``.
 """
@@ -117,7 +117,7 @@ Distributions.insupport(d::BiNormal, x::Real) = true
 """
     mean(d::BiNormal)
 
-Mean of the bi-normal distribution is ``μ = λ μ_1 + (1 - λ) μ_2``
+Mean of the bi-normal distribution is ``μ = λ μ_1 + (1 - λ) μ_2``.
 """
 Statistics.mean(d::BiNormal) = d.λ * mean(d.N₁) + (1 - d.λ) * mean(d.N₂)
 
@@ -151,7 +151,7 @@ Mathematical definition:
 where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
 ``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
 """
-function Distributions.skewness(d::BiNormal)
+function StatsBase.skewness(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     μ = mean(d)
     σ² = var(d)
@@ -178,7 +178,7 @@ Mathematical definition:
 where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
 ``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
 """
-function Distributions.kurtosis(d::BiNormal)
+function StatsBase.kurtosis(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
     μ = mean(d)
     σ² = var(d)
