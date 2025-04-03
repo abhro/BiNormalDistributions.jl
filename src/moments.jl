@@ -14,14 +14,8 @@ Compute the k-th moment of the normal distribution around 0.
 StatsBase.moment(d::Normal, ::Val{1}) = d.μ
 StatsBase.moment(d::Normal, ::Val{2}) = d.μ^2 + d.σ^2
 StatsBase.moment(d::Normal, ::Val{3}) = d.μ * (d.μ^2 + 3*d.σ^2)
-function StatsBase.moment(d::Normal, ::Val{4})
-    μ, σ = params(d)
-    return μ^4 + 6*μ^2*σ^2 + 3*σ^4
-end
-function StatsBase.moment(d::Normal, ::Val{5})
-    μ, σ = params(d)
-    return μ^5 + 10*μ^3*σ^2 + 15*μ*σ^4
-end
+StatsBase.moment(d::Normal, ::Val{4}) = d.μ^4 + 6*d.μ^2*d.σ^2 + 3*d.σ^4
+StatsBase.moment(d::Normal, ::Val{5}) = d.μ^5 + 10*d.μ^3*d.σ^2 + 15*d.μ*d.σ^4
 function StatsBase.moment(d::Normal, ::Val{6})
     μ, σ = params(d)
     return μ^6 + 15*μ^5*σ^2 + 45*μ^2*σ^4 + 15*σ^6
