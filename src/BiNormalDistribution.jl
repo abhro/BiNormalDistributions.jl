@@ -253,6 +253,15 @@ function Statistics.median(d::BiNormal)
     return find_zero(f, mean(d)) # initial guess at mean
 end
 
+function Distributions.pdfsquaredL2norm(d::BiNormal)
+    λ, μ₁, σ₁, μ₂, σ₂ = params(d)
+    return (
+            1/2√π * (λ^2 / σ₁^2 + (1-λ)^2/σ₂^2)
+            +
+            λ * (1-λ) * √(2 / (π * (σ₁^2+σ₂^2))) * exp(-(μ₁-μ₂)^2 / (2*(σ₁^2+σ^2)))
+           )
+end
+
 include("fitters.jl")
 include("moments.jl")
 
