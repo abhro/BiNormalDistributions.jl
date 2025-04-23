@@ -42,6 +42,7 @@ struct BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
     N₂::Normal{T}
 end
 BiNormal(λ, μ₁, σ₁, μ₂, σ₂) = BiNormal(λ, Normal(μ₁, σ₁), Normal(μ₂, σ₂))
+BiNormal(; λ, μ₁, σ₁, μ₂, σ₂) = BiNormal(λ, μ₁, σ₁, μ₂, σ₂)
 
 """
     params(d::BiNormal)
