@@ -136,7 +136,10 @@ Variance of the bi-normal distribution is
 """
 function Statistics.var(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
-    return λ * σ₁^2 + (1 - λ) * σ₂^2 + λ * (1 - λ) * (μ₁ - μ₂)^2
+    μ = mean(d)
+    #return λ * σ₁^2 + (1 - λ) * σ₂^2 + λ * (1 - λ) * (μ₁ - μ₂)^2
+    #return λ * (σ₁^2 + μ₁^2) + (1 - λ) * (σ₂^2 + μ₂^2) - μ^2
+    return λ * (σ₁^2 + (μ₁ - μ)^2) + (1 - λ) * (σ₂^2 + (μ₂ - μ)^2)
 end
 
 StatsBase.mode(d::BiNormal) = d.N₁.μ
