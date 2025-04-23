@@ -24,7 +24,7 @@ using Statistics
         x = rand(rng, dist, 100_000_000)
 
         @test mean(x) ≈ μ                 atol=5e-4
-        @test std(x, corrected=false) ≈ std(dist)
+        @test std(x) ≈ std(dist)
     end
 
     # test distribution with same underlying variances
