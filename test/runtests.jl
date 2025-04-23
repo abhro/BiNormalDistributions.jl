@@ -3,6 +3,7 @@ using Test
 using Aqua
 using StableRNGs
 using Distributions: Uniform
+using Statistics
 
 @testset "BiNormalDistribution" begin
     @testset "Code quality (Aqua)" begin
@@ -14,14 +15,17 @@ using Distributions: Uniform
         rng = StableRNG(123)
         μ = rand(rng)
         λ = rand(rng, Uniform(1//2, 1))
-        @info "Testing distributions with same mean $μ (λ = $λ)"
-        dist = BiNormal(λ, μ, 1, μ, 1)
+        σ₁ = randn(rng) |> abs
+        σ₂ = randn(rng) |> abs
+        dist = BiNormal(λ, μ, σ₁, μ, σ₂)
+        @info "Testing distributions with same mean $μ", dist
 
         # Create a dataset with "enough" samples
-        x = rand(rng, dist, 1000)
+        x = rand(rng, dist, 100_000_000)
 
-        @test mean(x) ≈ μ
+        @test mean(x) ≈ μ                 atol=5e-4
+        @test std(x, corrected=false) ≈ std(dist)
     end
 
-    # ditto with same variances
+    # test distribution with same underlying variances
 end
