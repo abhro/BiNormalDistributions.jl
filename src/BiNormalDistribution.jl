@@ -84,8 +84,9 @@ The probability density function (pdf) is
 f(x; λ, μ_1, σ_1, μ_2, σ_2) = λ N(x; μ_1, σ_1) + (1-λ) N(x; μ_2, σ_2)
 ```
 where ``N`` is the pdf of the normal distribution.
-""" Distributions.pdf(d::BiNormal, x::Real)
-Distributions.logpdf(d::BiNormal, x::Real) = log(sum(componentpdfs(d, x)))
+"""
+Distributions.pdf(d::BiNormal, x::Real) = sum(componentpdfs(d, x))
+Distributions.logpdf(d::BiNormal, x::Real) = log(pdf(d, x))
 
 """
     cdf(d::BiNormal, x::Real)
