@@ -53,9 +53,9 @@ StatsAPI.params(d::BiNormal) = (d.λ, params(d.N₁)..., params(d.N₂)...)
 Base.eltype(::Type{BiNormal{T}}) where {T} = T
 
 function Random.rand(rng::AbstractRNG, d::BiNormal)
-    x₁ = Random.rand(rng, d.N₁)
-    x₂ = Random.rand(rng, d.N₂)
-    return d.λ * x₁ + (1 - d.λ) * x₂
+    # choose a component normal distribution
+    dₙ = Random.rand(rng) < d.λ ? d.N₁ : d.N₂
+    return Random.rand(rng, dₙ)
 end
 
 """
