@@ -1,13 +1,13 @@
-using BiNormalDistribution
+using BiNormalDistributions
 using Test
 using Aqua
 using StableRNGs
 using Distributions: Uniform
 using Statistics
 
-@testset "BiNormalDistribution" begin
+@testset "BiNormalDistributions" begin
     @testset "Code quality (Aqua)" begin
-        Aqua.test_all(BiNormalDistribution, piracies = false)
+        Aqua.test_all(BiNormalDistributions, piracies = false)
     end
 
     # test distribution with unit mean, unit variance

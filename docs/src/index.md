@@ -1,10 +1,10 @@
 ```@meta
-CurrentModule = BiNormalDistribution
+CurrentModule = BiNormalDistributions
 ```
 
-# BiNormalDistribution
+# BiNormalDistributions
 
-Documentation for [BiNormalDistribution](https://github.com/abhro/BiNormalDistribution.jl).
+Documentation for [BiNormalDistributions](https://github.com/abhro/BiNormalDistributions.jl).
 
 ## Index
 ```@index
@@ -12,12 +12,12 @@ Documentation for [BiNormalDistribution](https://github.com/abhro/BiNormalDistri
 
 ## Types reference
 ```@autodocs
-Modules = [BiNormalDistribution]
+Modules = [BiNormalDistributions]
 Order = [:type]
 ```
 
 ## Functions reference
 ```@autodocs
-Modules = [BiNormalDistribution]
+Modules = [BiNormalDistributions]
 Order = [:function]
 ```

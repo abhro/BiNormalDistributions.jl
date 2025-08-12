@@ -1,6 +1,6 @@
 [deps]
-BiNormalDistribution = "35cb82aa-8885-40e5-a2ce-8461cb5c8dfc"
+BiNormalDistributions = "35cb82aa-8885-40e5-a2ce-8461cb5c8dfc"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 
-[sources.BiNormalDistribution]
+[sources.BiNormalDistributions]
 path = ".."
