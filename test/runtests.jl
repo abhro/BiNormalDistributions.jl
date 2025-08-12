@@ -46,8 +46,9 @@ using Statistics
         μ₁ = rand(rng)
         μ₂ = rand(rng)
         λ = rand(rng, Uniform(1//2, 1))
+        μ = λ * μ₁ + (1-λ) * μ₂
         σ = randn(rng) |> abs
-        dist = BiNormal(λ, μ, σ₁, μ, σ₂)
+        dist = BiNormal(λ, μ₁, σ, μ₂, σ)
         @info "Testing distributions with same variance $(σ^2)" dist
 
         # Create a dataset with "enough" samples
