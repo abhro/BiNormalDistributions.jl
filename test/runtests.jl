@@ -31,7 +31,7 @@ using Statistics
         σ₁ = randn(rng) |> abs
         σ₂ = randn(rng) |> abs
         dist = BiNormal(λ, μ, σ₁, μ, σ₂)
-        @info "Testing distributions with same mean $μ", dist
+        @info "Testing distributions with same mean $μ" dist
 
         # Create a dataset with "enough" samples
         x = rand(rng, dist, 100_000_000)
@@ -41,4 +41,19 @@ using Statistics
     end
 
     # test distribution with same underlying variances
+    @testset "σ₁ = σ₂ = σ" begin
+        rng = StableRNG(123)
+        μ₁ = rand(rng)
+        μ₂ = rand(rng)
+        λ = rand(rng, Uniform(1//2, 1))
+        σ = randn(rng) |> abs
+        dist = BiNormal(λ, μ, σ₁, μ, σ₂)
+        @info "Testing distributions with same variance $(σ^2)" dist
+
+        # Create a dataset with "enough" samples
+        x = rand(rng, dist, 100_000_000)
+
+        @test mean(x) ≈ μ                 atol=5e-4
+        @test std(x) ≈ std(dist)
+    end
 end
