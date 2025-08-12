@@ -9,7 +9,7 @@ StatsBase.moment(d::BiNormal, k) = d.λ*moment(d.N₁, k) + (1-d.λ)*moment(d.N�
     moment(d::Normal, Val(k))
 
 Compute the k-th moment of the normal distribution around 0.
-""" StatsBase.moment(::Normal, ::Any)
+""" StatsBase.moment(::Normal, ::Val)
 
 StatsBase.moment(d::Normal, ::Val{1}) = d.μ
 StatsBase.moment(d::Normal, ::Val{2}) = d.μ^2 + d.σ^2
