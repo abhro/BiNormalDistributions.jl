@@ -1,4 +1,4 @@
-module BiNormalDistribution
+module BiNormalDistributions
 
 using Distributions
 import Random

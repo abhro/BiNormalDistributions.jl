@@ -1,14 +1,14 @@
-using BiNormalDistribution
+using BiNormalDistributions
 using Documenter
 
-DocMeta.setdocmeta!(BiNormalDistribution, :DocTestSetup, :(using BiNormalDistribution); recursive=true)
+DocMeta.setdocmeta!(BiNormalDistributions, :DocTestSetup, :(using BiNormalDistributions); recursive=true)
 
 makedocs(;
-    modules=[BiNormalDistribution],
+    modules=[BiNormalDistributions],
     authors="Abhro R. and contributors",
-    sitename="BiNormalDistribution.jl",
+    sitename="BiNormalDistributions.jl",
     format=Documenter.HTML(;
-        canonical="https://abhro.github.io/BiNormalDistribution.jl",
+        canonical="https://abhro.github.io/BiNormalDistributions.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -18,6 +18,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/abhro/BiNormalDistribution.jl",
+    repo="github.com/abhro/BiNormalDistributions.jl",
     devbranch="main",
 )

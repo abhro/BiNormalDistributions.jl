@@ -1,11 +1,8 @@
 cff-version: 1.2.0
-title: BiNormalDistribution.jl
-message: >-
-  If you use this software, please cite it using the
-  metadata from this file.
+title: BiNormalDistributions.jl
 type: software
 authors:
   - given-names: Abhro
-repository-code: 'https://github.com/abhro/BiNormalDistribution.jl'
-url: 'https://abhro.github.io/BiNormalDistribution.jl'
+repository-code: 'https://github.com/abhro/BiNormalDistributions.jl'
+url: 'https://abhro.github.io/BiNormalDistributions.jl'
 license: MIT

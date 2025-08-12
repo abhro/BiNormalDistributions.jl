@@ -1,4 +1,4 @@
-name = "BiNormalDistribution"
+name = "BiNormalDistributions"
 uuid = "35cb82aa-8885-40e5-a2ce-8461cb5c8dfc"
 authors = ["Abhro R. and contributors"]
 version = "0.0.3-DEV"
