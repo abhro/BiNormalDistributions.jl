@@ -17,10 +17,10 @@ using Statistics
         dist = BiNormal(λ, 1, 1, 1, 1)
 
         # Create a dataset with "enough" samples
-        x = rand(rng, dist, 100_000_000)
+        x = rand(rng, dist, 200_000_000)
 
-        @test mean(x) ≈ 1                 atol=5e-4
-        @test std(x) ≈ std(dist)
+        @test mean(x) ≈ 1                 atol=1e-4
+        @test std(x) ≈ std(dist)          atol=1e-4
     end
 
     # test distribution with same underlying means
@@ -34,10 +34,10 @@ using Statistics
         @info "Testing distributions with same mean $μ" dist
 
         # Create a dataset with "enough" samples
-        x = rand(rng, dist, 100_000_000)
+        x = rand(rng, dist, 200_000_000)
 
-        @test mean(x) ≈ μ                 atol=5e-4
-        @test std(x) ≈ std(dist)
+        @test mean(x) ≈ μ                 atol=1e-4
+        @test std(x) ≈ std(dist)          atol=1e-4
     end
 
     # test distribution with same underlying variances
@@ -52,9 +52,9 @@ using Statistics
         @info "Testing distributions with same variance $(σ^2)" dist
 
         # Create a dataset with "enough" samples
-        x = rand(rng, dist, 100_000_000)
+        x = rand(rng, dist, 200_000_000)
 
-        @test mean(x) ≈ μ                 atol=5e-4
-        @test std(x) ≈ std(dist)
+        @test mean(x) ≈ μ                 atol=1e-4
+        @test std(x) ≈ std(dist)          atol=1e-4
     end
 end
