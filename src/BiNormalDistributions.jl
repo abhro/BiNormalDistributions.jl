@@ -14,6 +14,7 @@ export BiNormal, componentpdfs, componentcdfs
 
 @doc raw"""
     BiNormal{T<:Real,W<:Real} <: ContinuousUnivariateDistribution
+    BiNormal(λ::W, N₁::Normal{T}, N₂::Normal{T})
     BiNormal(λ::W, μ₁::T, σ₁::T, μ₂::T, σ₂::T)
 
 Linear combination of two Gaussians.
