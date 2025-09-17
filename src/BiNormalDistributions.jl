@@ -154,7 +154,7 @@ Mathematical definition:
 γ = \frac{λ μ_1 (μ_1^2 + σ_1^2) + (1 - λ) μ_2 (μ_2^2 + σ_2^2) - μ (3 σ^2 + μ^2)}{σ^3}
 ```
 where ``μ`` is the [mean of `d`](@ref Distributions.mean(::BiNormal)) and
-``σ`` is the [standard deviation of `d`](@ref Distributions.var(d::BiNormal))
+``σ`` is the [standard deviation of `d`](@ref Distributions.var(::BiNormal))
 """
 function StatsBase.skewness(d::BiNormal)
     λ, μ₁, σ₁, μ₂, σ₂ = params(d)
