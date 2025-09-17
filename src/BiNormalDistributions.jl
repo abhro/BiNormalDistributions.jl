@@ -215,7 +215,7 @@ end
 Moment generating function (``M_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-M_d(t) = λ \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2\right)
+M_d(t) =    λ  \exp\left(t μ_1 + \tfrac{1}{2} t^2 σ_1^2\right)
        + (1-λ) \exp\left(t μ_2 + \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
@@ -227,7 +227,7 @@ Distributions.mgf(d::BiNormal, t) = λ*mgf(d.N₁, t) + (1-λ)*mgf(d.N₂, t)
 Characteristic function (``φ_d``) of a bi-normal distribution `d`.
 The mathematical definition is:
 ```math
-φ_d(t) = λ \exp\left(itμ_1 - \tfrac{1}{2} t^2 σ_1^2\right)
+φ_d(t) =    λ  \exp\left(itμ_1 - \tfrac{1}{2} t^2 σ_1^2\right)
        + (1-λ) \exp\left(itμ_2 - \tfrac{1}{2} t^2 σ_2^2\right)
 ```
 """
